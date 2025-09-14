@@ -1,0 +1,73 @@
+# down sampling
+test: 1e-6
+Model:
+  model_name: wftr
+  PreEncoder:
+    preenc_npoints: 2048
+    pos_embed: fourier # fourier, sine
+    use_color: False
+  Encoder:
+    enc_type: vanilla # masked, maskedv2, vanilla
+    enc_nlayers: 3
+    enc_dim: 256
+    enc_ffn_dim: 128
+    enc_dropout: 0.1
+    enc_nhead: 4
+    enc_pos_embed: None
+    enc_activation: relu
+  Decoder:
+    dec_nlayers: 8
+    dec_dim: 256
+    dec_ffn_dim: 256
+    dec_dropout: 0.1
+    dec_nhead: 4
+  RegLine:
+    mlp_dropout: 0.3
+    nsemcls: -1
+    num_semcls: 18
+    nqueries: 192
+    direction_cls: 4
+Optimizer:
+  base_lr: 5e-4
+  warm_lr: 1e-6
+  warm_lr_epochs: 9
+  final_lr: 1e-6
+  lr_scheduler: cosine
+  weight_decay: 0.1
+  filter_biases_wd: False
+  clip_gradient: 0.1 # Max L2 norm of the gradient
+Loss:
+  Matcher:
+    matcher_hausdorff_distance_cost: 2
+    matcher_consine_cost: 1
+    matcher_center_cost: 0
+    matcher_confident_cost: 0
+    matcher_length_cost: 0
+  Weights:
+    loss_object_confidence_weight: 1
+    loss_directional_cls_weight: 2
+    loss_center_weight: 5
+    loss_size_weight: 1
+    loss_hausdorff_distance_weight: 2
+
+    loss_giou_weight: 0
+    loss_sem_cls_weight: 1
+    loss_no_object_weight: 0.2 # "no object" or "background" class for detection
+    loss_angle_cls_weight: 0.1
+    loss_angle_reg_weight: 0.5
+AP:
+  training:
+    distance_thresh: 0.2
+    confidence_thresh: 0.5
+    nms_thresh: 0.2
+  testing:
+    distance_thresh: 0.2
+    confidence_thresh: 0.7
+    nms_thresh: 0.2
+Dataset:
+  root_dir: './data/Entry-level' # Building3D dataset root dir
+  num_points: 2560
+  use_color: True
+  use_intensity: True
+  normalize: True
+  augment: False
