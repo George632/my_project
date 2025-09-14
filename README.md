@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # WFTR: Wireframe Reconstruction Using Transformer From Aerial Point Clouds
 
 #### 😄 Step 1: Clear the project structure
@@ -11,3 +12,6 @@
 ```angular2html
         👀️ model_wftr.py file
 ```
+=======
+# my_project
+>>>>>>> b907e4b153dafb12aef83e28cacb5904f631eccf
